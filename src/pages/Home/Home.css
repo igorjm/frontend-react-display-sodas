@@ -5,3 +5,7 @@
     margin-top: 10px;
   }
   
+  .filter {
+    display: block !important;
+    text-align: center;
+  }
