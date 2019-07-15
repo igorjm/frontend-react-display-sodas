@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Image } from 'semantic-ui-react'
+import { Card, Image, Label } from 'semantic-ui-react'
 
 import CurrencyFormat from 'react-currency-format';
 
@@ -42,6 +42,17 @@ const SodaCard = ({sodas: {marca, sabor, quantidade, valor, comprado, curtidas}}
         }
         return refrigerante
     }
+
+    const produtoComprado = comprado ? (
+        <Label as='a' color='red' tag>
+            Produto Indisponível
+        </Label>
+    ) : (
+        <Label as='a' color='green' tag>
+            Produto Disponível
+        </Label>
+    )
+
     return (
         <Card fluid>
             <Card.Content>
@@ -50,11 +61,12 @@ const SodaCard = ({sodas: {marca, sabor, quantidade, valor, comprado, curtidas}}
                 <Card.Meta>Sabor: {sabor}</Card.Meta>
                 <Card.Meta>Tamanho: {quantidade}</Card.Meta>
                 <Card.Description>
-                    Valor: <CurrencyFormat value={valor} displayType={'text'} thousandSeparator={false} prefix={'R$'}/>
+                    Valor: <CurrencyFormat value={valor} displayType={'text'} prefix={'R$'}/>
                 </Card.Description>
             </Card.Content>
             <Card.Content extra>
                 <LikeButton sodas={{ curtidas }}/>
+                {produtoComprado}
             </Card.Content>
         </Card>
     )
