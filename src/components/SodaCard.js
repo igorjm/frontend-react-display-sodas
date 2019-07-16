@@ -12,9 +12,7 @@ import sprite from '../assets/sprite.ico'
 
 import LikeButton from './LikeButton'
 
-const SodaCard = ({sodas: {marca, sabor, quantidade, valor, comprado, curtidas}}, filtro) => {
-
-    console.log('filtro', filtro)
+const SodaCard = ({sodas: {marca, sabor, quantidade, valor, comprado, curtidas}}) => {
     function populateImage(sabor, marca) {
         var refrigerante;
         
@@ -46,7 +44,7 @@ const SodaCard = ({sodas: {marca, sabor, quantidade, valor, comprado, curtidas}}
 
     const produtoComprado = comprado ? (
         <Label as='a' color='red' tag>
-            Produto Indisponível
+            Produto Comprado
         </Label>
     ) : (
         <Label as='a' color='green' tag>
@@ -55,23 +53,21 @@ const SodaCard = ({sodas: {marca, sabor, quantidade, valor, comprado, curtidas}}
     )
 
     return (
-        <>
-            <Card fluid>
-                <Card.Content>
-                    <Image floated='right' size='mini' src={populateImage(sabor, marca)} wrapped ui={false} />
-                    <Card.Header>Marca: {marca}</Card.Header>
-                    <Card.Meta>Sabor: {sabor}</Card.Meta>
-                    <Card.Meta>Tamanho: {quantidade}</Card.Meta>
-                    <Card.Description>
-                        Valor: <CurrencyFormat value={valor} displayType={'text'} prefix={'R$'}/>
-                    </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                    <LikeButton sodas={{ curtidas }}/>
-                    {produtoComprado}
-                </Card.Content>
-            </Card>
-        </>
+        <Card fluid>
+            <Card.Content>
+                <Image floated='right' size='mini' src={populateImage(sabor, marca)} wrapped ui={false} />
+                <Card.Header>Marca: {marca}</Card.Header>
+                <Card.Meta>Sabor: {sabor}</Card.Meta>
+                <Card.Meta>Tamanho: {quantidade}</Card.Meta>
+                <Card.Description>
+                    Valor: <CurrencyFormat value={valor} displayType={'text'} prefix={'R$'}/>
+                </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+                <LikeButton likes={{ curtidas }}/>
+                {produtoComprado}
+            </Card.Content>
+        </Card>
     )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Label, Icon } from 'semantic-ui-react'
 
-function LikeButton({ sodas: { curtidas } }) {
+function LikeButton({ likes: { curtidas } }) {
 
     const likeButton = curtidas > 0 ? (
         <Button color='teal'>

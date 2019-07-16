@@ -4,7 +4,7 @@ import api from '../../services/api'
 import './Home.css'
 import { Grid, Transition, Dropdown } from 'semantic-ui-react'
 
-import SodaListCard from '../../components/SodaListCard'
+import SodaCard from '../../components/SodaCard'
 
 class Home extends Component {
   state = {
@@ -15,11 +15,15 @@ class Home extends Component {
   async componentDidMount() {
     const response = await api.get('refrigerante/listar')
     this.setState({ options: response.data })
+    console.log('response.data', response.data)
   }
 
-  _searchByFilter = (e, {value}) => {
-    this.state.filtro = value
-    console.log(this.state.filtro)
+  handleFilter = (value) => {
+    console.log('value', value)
+    this.setState({
+      filtro: value
+    })
+    console.log('this.state.filtro',this.state.filtro)
   }
 
   render() {
@@ -35,7 +39,7 @@ class Home extends Component {
                     { key: "pureza", text: "Pureza", value: "Pureza" },
                   ]}
                   placeholder='Selecione a Marca'
-                  onChange={this._searchByFilter}
+                  onChange={this.handleFilter}
                   selection
                 />
             </Grid.Row>
@@ -43,7 +47,7 @@ class Home extends Component {
                 <Transition.Group>
                     {this.state.options.map((sodas) => (
                         <Grid.Column key={sodas.id} style={{ marginBottom: 20 }}>
-                            <SodaListCard sodas={sodas} filtro={this.state.filtro}/>
+                            <SodaCard sodas={sodas} filtro={this.state.filtro}/>
                         </Grid.Column>
                     ))}
                 </Transition.Group>
