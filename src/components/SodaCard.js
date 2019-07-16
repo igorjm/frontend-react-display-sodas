@@ -12,8 +12,9 @@ import sprite from '../assets/sprite.ico'
 
 import LikeButton from './LikeButton'
 
-const SodaCard = ({sodas: {marca, sabor, quantidade, valor, comprado, curtidas}}) => {
-    function populateImage(sabor, marca) {
+const SodaCard = ({sodas, filtro}) => {
+
+    function handleImage(sabor, marca) {
         var refrigerante;
         
         switch(sabor) {
@@ -42,12 +43,12 @@ const SodaCard = ({sodas: {marca, sabor, quantidade, valor, comprado, curtidas}}
         return refrigerante
     }
 
-    const produtoComprado = comprado ? (
-        <Label as='a' color='red' tag>
+    const produtoComprado = sodas.comprado ? (
+        <Label as='a' color='red' tag className="avoid-clicks">
             Produto Comprado
         </Label>
     ) : (
-        <Label as='a' color='green' tag>
+        <Label as='a' color='green' tag className="avoid-clicks">
             Produto Disponível
         </Label>
     )
@@ -55,16 +56,16 @@ const SodaCard = ({sodas: {marca, sabor, quantidade, valor, comprado, curtidas}}
     return (
         <Card fluid>
             <Card.Content>
-                <Image floated='right' size='mini' src={populateImage(sabor, marca)} wrapped ui={false} />
-                <Card.Header>Marca: {marca}</Card.Header>
-                <Card.Meta>Sabor: {sabor}</Card.Meta>
-                <Card.Meta>Tamanho: {quantidade}</Card.Meta>
+                <Image floated='right' size='mini' src={handleImage(sodas.sabor, sodas.marca)} wrapped ui={false} />
+                <Card.Header>Marca: {sodas.marca}</Card.Header>
+                <Card.Meta>Sabor: {sodas.sabor}</Card.Meta>
+                <Card.Meta>Tamanho: {sodas.quantidade}</Card.Meta>
                 <Card.Description>
-                    Valor: <CurrencyFormat value={valor} displayType={'text'} prefix={'R$'}/>
+                    Valor: <CurrencyFormat value={sodas.valor} displayType={'text'} prefix={'R$'}/>
                 </Card.Description>
             </Card.Content>
             <Card.Content extra>
-                <LikeButton likes={{ curtidas }}/>
+                <LikeButton likes={sodas.curtidas}/>
                 {produtoComprado}
             </Card.Content>
         </Card>

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button, Label, Icon } from 'semantic-ui-react'
 
-function LikeButton({ likes: { curtidas } }) {
+function LikeButton(props) {
 
-    const likeButton = curtidas > 0 ? (
+    const likeButton = props.likes > 0 ? (
         <Button color='teal'>
             <Icon name='heart' />
         </Button>
@@ -17,7 +17,7 @@ function LikeButton({ likes: { curtidas } }) {
         <Button as='div' labelPosition='right' className="avoid-clicks">
             {likeButton}
             <Label basic color='teal' pointing='left'>
-                {curtidas}
+                {props.likes}
             </Label>
         </Button>
     )

@@ -6,39 +6,46 @@ import { Grid, Transition, Dropdown } from 'semantic-ui-react'
 
 import SodaCard from '../../components/SodaCard'
 
+const filtrosOptions = [
+  { key: "todos", text: "Todos", value: "todos" },
+  { key: "cocacola", text: "Coca-Cola", value: "Coca-cola" },
+  { key: "antartica", text: "Antartica", value: "Antartica" },
+  { key: "pureza", text: "Pureza", value: "Pureza" },
+]
+
 class Home extends Component {
-  state = {
-    options: [],
-    filtro: ''
+  constructor(props) {
+    super(props)
+    this.state = {
+      options: [],
+      filtro: ''
+    }
   }
 
   async componentDidMount() {
     const response = await api.get('refrigerante/listar')
     this.setState({ options: response.data })
-    console.log('response.data', response.data)
+    // console.log('response.data', response.data)
   }
 
-  handleFilter = (value) => {
-    console.log('value', value)
+  handleFilter = (e, data) => {
+    // console.log('data', data.value)
     this.setState({
-      filtro: value
+      filtro: data.value
     })
-    console.log('this.state.filtro',this.state.filtro)
   }
 
   render() {
+    const { filtro } = this.state;
+
     return(
       <Grid columns={3}>
             <Grid.Row className="page-title">
                 <h1>Refrigerantes</h1>
                 <Dropdown
-                  options={[
-                    { key: "todos", text: "Todos", value: "todos" },
-                    { key: "cocacola", text: "Coca-Cola", value: "Coca-cola" },
-                    { key: "antartica", text: "Antartica", value: "Antartica" },
-                    { key: "pureza", text: "Pureza", value: "Pureza" },
-                  ]}
                   placeholder='Selecione a Marca'
+                  // value={filtro}
+                  options={filtrosOptions}
                   onChange={this.handleFilter}
                   selection
                 />
@@ -47,7 +54,7 @@ class Home extends Component {
                 <Transition.Group>
                     {this.state.options.map((sodas) => (
                         <Grid.Column key={sodas.id} style={{ marginBottom: 20 }}>
-                            <SodaCard sodas={sodas} filtro={this.state.filtro}/>
+                            <SodaCard sodas={sodas} filtro={filtro}/>
                         </Grid.Column>
                     ))}
                 </Transition.Group>
